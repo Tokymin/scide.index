@@ -9,57 +9,99 @@
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header>
-        <h1>SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation</h1>
-        <p>By Min Tan, Boyun Zheng, Yushun Tao, Gaosheng Xie, Zeyang Xia, and Jing Xiong</p>
-    </header>
-
-    <!-- Abstract Section -->
-    <section>
-        <div class="card">
-            <h2>论文摘要</h2>
-            <p>Monocular depth estimation in endoscopic environments is crucial for surgical video understanding, robotic navigation, and 3D reconstruction. However, existing discriminative approaches for depth estimation, often struggle with the challenging conditions of endoscopic imagery, such as complex illumination, narrow luminal spaces, and low-contrast surfaces, resulting in unreliable and inaccurate depth predictions. To address these challenges, we propose the Structure-Content Integrated Diffusion Estimation (SCIDE). Specifically, we introduce the Structure-Content Extractor (SC-Extractor), a module specifically designed to extract structure and content priors to guide the depth estimation process in endoscopic environments. The SC-Extractor effectively captures spatial cues from illumination patterns and wall contours, thereby enhancing robustness to challenging lighting conditions and improving overall depth accuracy. Additionally, we present the Fast Optimized Diffusion Sampler (FODS), an innovative sampling mechanism that leverages an optimization framework for adaptive time-step selection in diffusion probabilistic models. By minimizing the discrepancy between numerical solver approximations and ground-truth ODE solutions, FODS accelerates the inference process while maintaining high fidelity, making real-time application feasible in surgical settings. Experimental results demonstrate that our SCIDE framework not only achieves state-of-the-art accuracy under challenging conditions but also significantly reduces inference time, providing an efficient and effective solution for real-time endoscopic depth estimation.</p>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation</h1>
+            <p><em>Min Tan, Boyun Zheng, Yushun Tao, Gaosheng Xie, Zeyang Xia, Senior Member, IEEE and Jing Xiong, Member, IEEE</em></p>   
         </div>
-    </section>
 
-    <!-- Authors Section -->
-    <section>
-        <div class="card">
-            <h2>作者信息</h2>
-            <p><strong>Min Tan</strong>, <strong>Boyun Zheng</strong>, <strong>Yushun Tao</strong>, <strong>Gaosheng Xie</strong>, <strong>Zeyang Xia</strong> and <strong>Jing Xiong</strong></p>
-            <p>Min Tan and Yushun Tao are with the Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences, Shenzhen, China.</p>
-            <p>Boyun Zheng is with the Department of Electronic Engineering, Chinese University of Hong Kong, Hong Kong SAR, China.</p>
-            <p>Gaosheng Xie and Jing Xiong are with the Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences, Shenzhen, China.</p>
-            <p>Zeyang Xia is with the School of Mechanical Engineering, Shanghai Jiao Tong University, Shanghai, China.</p>
+        <!-- Video Section -->
+        <div class="container image-row">
+            <div class="row">
+                <div class="col-md-6 image-container">
+                    <!-- Video player -->
+                    <video width="70%" height="auto" controls>
+                        <source src="/videos/your-video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <!-- Keywords Section -->
-    <section>
-        <div class="card">
-            <h2>论文关键词</h2>
-            <p>Endoscopic image processing, Monocular Depth Estimation, Diffusion</p>
-        </div>
-    </section>
+        <p><em>※ Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences, 518055, Shenzhen, China.<br>※ University of Chinese Academy of Sciences, 101400, Beijing, China.<br>※ Department of Electronic Engineering, Chinese University of Hong Kong, 999077, Hong Kong SAR, China.<br>※ Shenzhen University General Hospital, 518055, Shenzhen, China.</em></p>
 
-    <!-- Image Section -->
-    <section>
-        <div class="card">
-            <h2>图像展示</h2>
-            <img src="path/to/your/image.jpg" alt="Endoscopic Depth Estimation Image">
-            <p>上面是我们的模型在内窥镜深度估计中的应用示意图。</p>
+        <!-- Resources Section -->
+        <div class="content-section">
+            <h2 class="section-title">Resources</h2>
+            <ul>
+                <li><a href="https://arxiv.org/abs/2409.15688" target="_blank">Download Paper (PDF)</a></li>
+                <li><a href="https://github.com/your-username/your-repository" target="_blank">Code on GitHub</a></li>
+            </ul>
         </div>
-    </section>
 
-    <!-- Download Section -->
-    <section>
-        <div class="card">
-            <h2>下载论文</h2>
-            <p>点击以下链接下载完整论文：</p>
-            <a href="path/to/your/paper.pdf" download>下载论文 PDF</a>
+        <!-- Abstract Section -->
+        <div class="content-section">
+            <h2 class="section-title">Abstract</h2>
+            <p>Monocular depth estimation in endoscopic environments is crucial for surgical video understanding, robotic navigation, and 3D reconstruction. However, existing discriminative approaches for depth estimation often struggle with challenging conditions such as complex illumination and narrow luminal spaces. To address these challenges, we propose the Structure-Content Integrated Diffusion Estimation (SCIDE), which combines structure and content priors to guide depth estimation. Experimental results show that our SCIDE framework not only achieves state-of-the-art accuracy but also significantly reduces inference time, making real-time applications feasible in surgical settings.</p>
         </div>
-    </section>
+
+        <!-- Image Row Section -->
+        <div class="container image-row">
+            <div class="row">
+                <div class="col-md-6 image-container">
+                    <img src="/images/your-image-1.jpg" class="img-fluid" alt="Image 1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 image-container">
+                    <img src="/images/your-image-2.jpg" class="img-fluid" alt="Image 2">
+                </div>  
+            </div>
+        </div>
+
+        <!-- Approach Section -->
+        <div class="content-section">
+            <h2 class="section-title">Approach</h2>
+            <p>We propose a novel Structure-Content Extractor (SC-Extractor) and Fast Optimized Diffusion Sampler (FODS) to improve depth estimation in challenging endoscopic environments. SC-Extractor captures spatial cues from illumination patterns and wall contours, while FODS accelerates the inference process using an adaptive time-step selection mechanism. These two innovations work together to enhance depth accuracy and speed.</p>
+            <div class="container image-row">
+                <div class="row">
+                    <div class="col-md-6 image-container">
+                        <img src="/images/your-image-3.jpg" class="img-fluid" alt="Image 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="content-section">
+            <h2 class="section-title">Results</h2>
+            <p>Experimental results demonstrate that our SCIDE framework achieves higher accuracy in monocular depth estimation under challenging endoscopic conditions compared to existing approaches. Specifically, our method shows improved robustness to illumination variations and complex surface structures. The following images show our method’s performance in different endoscopic environments:</p>
+
+            <!-- Image Grid Section -->
+            <div class="container image-row">
+                <div class="row">
+                    <div class="col-md-6 image-container">
+                        <img src="/images/your-image-4.jpg" class="img-fluid" id="custom-img" alt="Result 1">
+                    </div>
+                    <div class="col-md-6 image-container">
+                        <img src="/images/your-image-5.jpg" class="img-fluid" alt="Result 2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 image-container">
+                        <img src="/images/your-image-6.jpg" class="img-fluid" alt="Result 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
     <!-- Footer Section -->
     <footer>

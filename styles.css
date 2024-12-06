@@ -1,87 +1,80 @@
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    color: #333;
+    font-family: Arial, sans-serif;
 }
 
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 50px 20px;
+.header {
     text-align: center;
+    margin: 20px 0;
 }
 
-header h1 {
-    font-size: 2.5em;
-    margin: 0;
+.content-section {
+    margin: 20px;
 }
 
-header p {
-    font-size: 1.2em;
-    margin: 10px 0;
-}
-
-section {
-    padding: 40px 20px;
-    margin: 20px auto;
-    width: 90%;
-    max-width: 1200px;
-}
-
-.card {
-    background: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.card img {
+.content-section img {
     max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    height: auto;
 }
 
-.card h2 {
-    font-size: 1.8em;
-    color: #4CAF50;
-    margin-bottom: 20px;
+.section-title {
+    margin-top: 40px;
+    font-weight: bold;
 }
 
-.card p {
-    font-size: 1.1em;
-    line-height: 1.6;
+.image-container {
+    padding: 15px;
 }
 
-.card a {
-    display: inline-block;
+.image-container img {
+    border-radius: 10px; /* Adds rounded corners to images */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+}
+
+.image-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Adds space between the images */
     margin-top: 20px;
-    font-size: 1.1em;
-    color: #4CAF50;
-    text-decoration: none;
-    padding: 10px 20px;
-    border: 2px solid #4CAF50;
-    border-radius: 5px;
 }
 
-.card a:hover {
-    background-color: #4CAF50;
-    color: white;
+.image-row img {
+    max-width: 100%; /* Ensures images are responsive */
+    height: 500px; /* Maintains aspect ratio */
+    width: auto; /* Sets a fixed width for all images */
+    border-radius: 10px; /* Adds rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
 }
 
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
+h1 {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 2.5em;
+}
+
+p {
+    font-size: 24px;
+    line-height: 2;
+    color: #333;
+    text-align: justify;
     padding: 20px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    background-color: #f9f9f9;
+    border-left: 5px solid #007BFF;
+    border-radius: 8px;
+}
+
+li {
+    font-size: 24px;
+}
+
+#custom-img {
+    height: 300px;
+    width: auto;
+}
+
+#result-img {
+    height: 300px;
+    width: auto;
 }
