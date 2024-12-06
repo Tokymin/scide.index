@@ -1,15 +1,17 @@
 body {
     font-family: Arial, sans-serif;
-    margin-left: 20%;  /* 左侧留出20% */
-    margin-right: 20%; /* 右侧留出20% */
+    /*margin-left: 20%;  /* 左侧留出20% */
+    /*margin-right: 20%; /* 右侧留出20% */
     padding: 0;        /* 清除默认的内边距 */
+    margin: 0;
 }
 
 /* Optional: Limit max-width to ensure readability on large screens */
 .container {
-    max-width: 80%; /* 最大宽度设置为80% */
+    width: 80%; /* 最大宽度设置为80% */
     margin: 0 auto; /* 居中容器 */
     padding: 20px;   /* 为容器添加内边距（可选） */
+    width: 60%; /* 设置容器宽度为 60%，留出左右 20% 空白 */
 }
 .header {
     text-align: center;
