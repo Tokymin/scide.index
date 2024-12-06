@@ -3,36 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>论文主页</title>
-    <link rel="stylesheet" href="styles.css"> <!-- 引用 CSS 样式 -->
+    <title>SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!-- Header Section -->
     <header>
-        <h1>我的论文标题</h1>
-        <p>作者：姓名</p>
-        <p>所属机构：机构名称</p>
+        <h1>SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation</h1>
+        <p>By Min Tan, Boyun Zheng, Yushun Tao, Gaosheng Xie, Zeyang Xia, and Jing Xiong</p>
     </header>
 
+    <!-- Abstract Section -->
     <section>
-        <h2>论文摘要</h2>
-        <p>在这里放入你的论文摘要。</p>
+        <div class="card">
+            <h2>论文摘要</h2>
+            <p>Monocular depth estimation in endoscopic environments is crucial for surgical video understanding, robotic navigation, and 3D reconstruction. However, existing discriminative approaches for depth estimation, often struggle with the challenging conditions of endoscopic imagery, such as complex illumination, narrow luminal spaces, and low-contrast surfaces, resulting in unreliable and inaccurate depth predictions. To address these challenges, we propose the Structure-Content Integrated Diffusion Estimation (SCIDE). Specifically, we introduce the Structure-Content Extractor (SC-Extractor), a module specifically designed to extract structure and content priors to guide the depth estimation process in endoscopic environments. The SC-Extractor effectively captures spatial cues from illumination patterns and wall contours, thereby enhancing robustness to challenging lighting conditions and improving overall depth accuracy. Additionally, we present the Fast Optimized Diffusion Sampler (FODS), an innovative sampling mechanism that leverages an optimization framework for adaptive time-step selection in diffusion probabilistic models. By minimizing the discrepancy between numerical solver approximations and ground-truth ODE solutions, FODS accelerates the inference process while maintaining high fidelity, making real-time application feasible in surgical settings. Experimental results demonstrate that our SCIDE framework not only achieves state-of-the-art accuracy under challenging conditions but also significantly reduces inference time, providing an efficient and effective solution for real-time endoscopic depth estimation.</p>
+        </div>
     </section>
 
+    <!-- Authors Section -->
     <section>
-        <h2>下载论文</h2>
-        <p><a href="paper.pdf" download>点击这里下载我的论文</a></p>
+        <div class="card">
+            <h2>作者信息</h2>
+            <p><strong>Min Tan</strong>, <strong>Boyun Zheng</strong>, <strong>Yushun Tao</strong>, <strong>Gaosheng Xie</strong>, <strong>Zeyang Xia</strong> and <strong>Jing Xiong</strong></p>
+            <p>Min Tan and Yushun Tao are with the Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences, Shenzhen, China.</p>
+            <p>Boyun Zheng is with the Department of Electronic Engineering, Chinese University of Hong Kong, Hong Kong SAR, China.</p>
+            <p>Gaosheng Xie and Jing Xiong are with the Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences, Shenzhen, China.</p>
+            <p>Zeyang Xia is with the School of Mechanical Engineering, Shanghai Jiao Tong University, Shanghai, China.</p>
+        </div>
     </section>
 
+    <!-- Keywords Section -->
     <section>
-        <h2>相关代码</h2>
-        <p>你可以访问我的代码库，查看实现代码。</p>
-        <a href="https://github.com/username/repo">GitHub 代码仓库</a>
+        <div class="card">
+            <h2>论文关键词</h2>
+            <p>Endoscopic image processing, Monocular Depth Estimation, Diffusion</p>
+        </div>
     </section>
 
+    <!-- Image Section -->
     <section>
-        <h2>展示 Demo</h2>
-        <p>以下是一个简单的在线 demo：</p>
-        <iframe src="demo.html" width="600" height="400"></iframe>
+        <div class="card">
+            <h2>图像展示</h2>
+            <img src="path/to/your/image.jpg" alt="Endoscopic Depth Estimation Image">
+            <p>上面是我们的模型在内窥镜深度估计中的应用示意图。</p>
+        </div>
     </section>
+
+    <!-- Download Section -->
+    <section>
+        <div class="card">
+            <h2>下载论文</h2>
+            <p>点击以下链接下载完整论文：</p>
+            <a href="path/to/your/paper.pdf" download>下载论文 PDF</a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2024 SCIDE Research Team</p>
+    </footer>
+
 </body>
 </html>
