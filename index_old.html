@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- 引用 CSS 样式 -->
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation</h1>
+            <p><em>Min Tan, Yushun Tao, Boyun Zheng, Gaosheng Xie, Zeyang Xia, Senior Member, IEEE and Jing Xiong, Member, IEEE</em></p>   
+        </div>
+
+        <p><em>※ Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences, 518055, Shenzhen, China.<br>※ University of Chinese Academy of Sciences, 101400, Beijing, China.<br>※ Department of Electronic Engineering, Chinese University of Hong Kong, 999077, Hong Kong SAR, China.<br></p>
+
+        <!-- Resources Section -->
+        <div class="content-section">
+            <h2 class="section-title">Resources</h2>
+            <ul>
+                <li><a href="https://arxiv.org/abs/xxx" target="_blank">Download Paper (PDF)</a></li>
+                <li><a href="https://github.com/Tokymin/DM_ControlNet_Depth_Prediction" target="_blank">Code on GitHub</a></li>
+            </ul>
+        </div>
+
+        <!-- Abstract Section -->
+        <div class="content-section">
+            <h2 class="section-title">Abstract</h2>
+            <p>Monocular depth estimation in endoscopic environments is crucial for surgical video understanding, robotic navigation, and 3D reconstruction. However, existing discriminative approaches for depth estimation often struggle with challenging conditions such as complex illumination and narrow luminal spaces. To address these challenges, we propose the Structure-Content Integrated Diffusion Estimation (SCIDE), which combines structure and content priors to guide depth estimation. Experimental results show that our SCIDE framework not only achieves state-of-the-art accuracy but also significantly reduces inference time, making real-time applications feasible in surgical settings.</p>
+        </div>
+
+        <!-- Image Row Section -->
+        <div class="container image-row">
+            <div class="row">
+                <div class="col-md-6 image-container">
+                    <img src="images/image-1.png" class="img-fluid" alt="Image 1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 image-container">
+                    <img src="images/image-2.png" class="img-fluid" alt="Image 2">
+                </div>  
+            </div>
+        </div>
+
+        <!-- Approach Section -->
+        <div class="content-section">
+            <h2 class="section-title">Approach</h2>
+            <p>We propose a novel Structure-Content Extractor (SC-Extractor) and Fast Optimized Diffusion Sampler (FODS) to improve depth estimation in challenging endoscopic environments. SC-Extractor captures spatial cues from illumination patterns and wall contours, while FODS accelerates the inference process using an adaptive time-step selection mechanism. These two innovations work together to enhance depth accuracy and speed.</p>
+            <div class="container image-row">
+                <div class="row">
+                    <div class="col-md-6 image-container">
+                        <img src="images/image-3.png" class="img-fluid" alt="Image 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="content-section">
+            <h2 class="section-title">Results</h2>
+            <p>Experimental results demonstrate that our SCIDE framework achieves higher accuracy in monocular depth estimation under challenging endoscopic conditions compared to existing approaches. Specifically, our method shows improved robustness to illumination variations and complex surface structures. The following images show our method’s performance in different endoscopic environments:</p>
+
+            <!-- Image Grid Section -->
+            <div class="container image-row">
+                <div class="row">
+                    <div class="col-md-6 image-container">
+                        <img src="images/image-4.png" class="img-fluid" id="custom-img" alt="Result 1">
+                    </div>
+                    <div class="col-md-6 image-container">
+                        <img src="images/image-5.png" class="img-fluid" alt="Result 2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 image-container">
+                        <img src="images/image-6.png" class="img-fluid" alt="Result 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2024 SCIDE Research Team</p>
+    </footer>
+
+</body>
+</html>

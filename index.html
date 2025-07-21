@@ -4,109 +4,612 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- 引用 CSS 样式 -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义 Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36D399',
+                        accent: '#FF9F43',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            /* .text-shadow {
+                text-shadow: 0 2px 4px rgba(10, 3, 3,1);
+            } */
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                /* box-shadow: 0 10px 25px -5px #1200001a, 0 10px 10px -5px rgb(23, 22, 22); */
+            }
+            .gradient-bg {
+                background: transparent;
+                /* background: linear-gradient(135deg, #165DFF 0%, #36D399 100%); */
+            }
+            .section-transition {
+                transition: all 0.5s ease;
+            }
+        }
+    </style>
 </head>
-<body>
-
-    <div class="container">
-        <!-- Header Section -->
-        <div class="header">
-            <h1>SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation</h1>
-            <p><em>Min Tan, Boyun Zheng, Yushun Tao, Gaosheng Xie, Zeyang Xia, Senior Member, IEEE and Jing Xiong, Member, IEEE</em></p>   
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- 导航栏 -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-primary font-bold text-xl flex items-center">
+                <span class="mr-2">📌</span>SCIDE
+            </a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#abstract" class="text-gray-600 hover:text-primary transition-colors">摘要</a>
+                <a href="#resources" class="text-gray-600 hover:text-primary transition-colors">资源</a>
+                <a href="#results" class="text-gray-600 hover:text-primary transition-colors">结果</a>
+                <a href="#images" class="text-gray-600 hover:text-primary transition-colors">图片</a>
+            </div>
+            <button class="md:hidden text-gray-600 focus:outline-none" id="menu-toggle">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
         </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden hidden bg-white shadow-lg absolute w-full" id="mobile-menu">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#abstract" class="text-gray-600 hover:text-primary py-2 transition-colors">摘要</a>
+                <a href="#resources" class="text-gray-600 hover:text-primary py-2 transition-colors">资源</a>
+                <a href="#results" class="text-gray-600 hover:text-primary py-2 transition-colors">结果</a>
+                <a href="#images" class="text-gray-600 hover:text-primary py-2 transition-colors">图片</a>
+            </div>
+        </div>
+    </nav>
 
-        <!-- Video Section -->
-        <!-- <div class="container image-row">
-            <div class="row">
-                <div class="col-md-6 image-container">
-                    <!-- Video player -->
-                    <!-- <video width="70%" height="auto" controls>
-                        <source src="/videos/your-video.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+    <!-- 主容器 -->
+    <div class="container mx-auto px-4 pt-24 pb-16">
+        <!-- 头部区域 -->
+        <header class="text-center mb-16 section-transition">
+            <div class="gradient-bg bg-clip-text mb-4">
+                <h1 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-shadow">
+                    SCIDE: Structure-Content Integrated Diffusion for Faster Endoscopic Depth Estimation
+                </h1>
+            </div>
+            <p class="text-gray-600 italic text-lg mb-6">
+                <em>Min Tan, Yushun Tao, Boyun Zheng, Gaosheng Xie, Zeyang Xia, Senior Member, IEEE and Jing Xiong, Member, IEEE</em>
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm flex items-center">
+                    <i class="fa fa-user-circle mr-2"></i> Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences, 518055, Shenzhen, China.
+                </span>
+                <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm flex items-center">
+                    <i class="fa fa-user-circle mr-2"></i> University of Chinese Academy of Sciences, 101400, Beijing, China.
+                </span>
+                <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm flex items-center">
+                    <i class="fa fa-user-circle mr-2"></i> Department of Electronic Engineering, Chinese University of Hong Kong, 999077, Hong Kong SAR, China.
+                </span>
+                <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm flex items-center">
+                    <i class="fa fa-user-circle mr-2"></i> School of Mechanical Engineering, Shanghai Jiao Tong University, 200240, Shanghai, China.
+                </span>
+            </div>
+            <div class="inline-flex items-center space-x-4">
+                <a href="#abstract" class="px-6 py-3 bg-primary text-white rounded-lg shadow-lg hover:bg-primary/90 transition-all flex items-center">
+                    <i class="fa fa-file-text-o mr-2"></i> 摘要
+                </a>
+                <a href="#resources" class="px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-gray-50 transition-all flex items-center">
+                    <i class="fa fa-download mr-2"></i> 资源
+                </a>
+            </div>
+        </header>
+
+        <!-- 资源部分 -->
+        <section id="resources" class="mb-16 section-transition">
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                    <i class="fa fa-download text-primary"></i>
                 </div>
+                <h2 class="text-2xl font-bold text-gray-800">Resources <span class="text-primary">📚</span></h2>
             </div>
-        </div> -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="#" target="_blank" class="bg-white p-6 rounded-xl shadow-md card-hover flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                        <i class="fa fa-file-pdf-o text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800">Download Paper (PDF)</h3>
+                        <p class="text-gray-500 text-sm">全文下载 📄</p>
+                    </div>
+                </a>
+                <a href="" target="_blank" class="bg-white p-6 rounded-xl shadow-md card-hover flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                        <i class="fa fa-external-link text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800">Other Work</h3>
+                        <p class="text-gray-500 text-sm">Safe Navigation for Robotic Digestive Endoscopy via Human Intervention-based Reinforcement Learning 🌐</p>
+                    </div>
+                </a>
+                <a href="https://tokymin.github.io/hirde.index" target="_blank" class="bg-white p-6 rounded-xl shadow-md card-hover flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mr-4">
+                        <i class="fa fa-picture-o text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800">More visualizations</h3>
+                        <p class="text-gray-500 text-sm">更多可视化展示 🖼️</p>
+                    </div>
+                </a>
+                <a href="https://tokymin.github.io/aka-net/" target="_blank" class="bg-white p-6 rounded-xl shadow-md card-hover flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center mr-4">
+                        <i class="fa fa-github text-orange-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800">Code on GitHub (Soon)</h3>
+                        <p class="text-gray-500 text-sm">代码仓库 🚧</p>
+                    </div>
+                </a>
+            </div>
+        </section>
 
-        <p><em>※ Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences, 518055, Shenzhen, China.<br>※ University of Chinese Academy of Sciences, 101400, Beijing, China.<br>※ Department of Electronic Engineering, Chinese University of Hong Kong, 999077, Hong Kong SAR, China.<br></p>
-
-        <!-- Resources Section -->
-        <div class="content-section">
-            <h2 class="section-title">Resources</h2>
-            <ul>
-                <li><a href="https://arxiv.org/abs/xxx" target="_blank">Download Paper (PDF)</a></li>
-                <li><a href="https://github.com/Tokymin/DM_ControlNet_Depth_Prediction" target="_blank">Code on GitHub</a></li>
-            </ul>
-        </div>
-
-        <!-- Abstract Section -->
-        <div class="content-section">
-            <h2 class="section-title">Abstract</h2>
-            <p>Monocular depth estimation in endoscopic environments is crucial for surgical video understanding, robotic navigation, and 3D reconstruction. However, existing discriminative approaches for depth estimation often struggle with challenging conditions such as complex illumination and narrow luminal spaces. To address these challenges, we propose the Structure-Content Integrated Diffusion Estimation (SCIDE), which combines structure and content priors to guide depth estimation. Experimental results show that our SCIDE framework not only achieves state-of-the-art accuracy but also significantly reduces inference time, making real-time applications feasible in surgical settings.</p>
-        </div>
-
-        <!-- Image Row Section -->
-        <div class="container image-row">
-            <div class="row">
-                <div class="col-md-6 image-container">
-                    <img src="images/image-1.png" class="img-fluid" alt="Image 1">
+        <!-- 摘要部分 -->
+        <section id="abstract" class="mb-16 section-transition">
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                    <i class="fa fa-file-text-o text-primary"></i>
                 </div>
+                <h2 class="text-2xl font-bold text-gray-800">Abstract <span class="text-primary">📝</span></h2>
             </div>
-            <div class="row">
-                <div class="col-md-6 image-container">
-                    <img src="images/image-2.png" class="img-fluid" alt="Image 2">
-                </div>  
-            </div>
-        </div>
+            <div class="bg-white p-8 rounded-xl shadow-md">
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    <span class="text-primary font-semibold">Background:</span> Monocular depth estimation in endoscopic environments is crucial for surgical video understanding, robotic navigation, and 3D reconstruction. However, existing discriminative approaches for depth estimation often struggle with challenging conditions such as complex illumination and narrow luminal spaces.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    <span class="text-primary font-semibold">Methods:</span> To address these challenges, we propose the Structure-Content Integrated Diffusion Estimation (SCIDE), which combines structure and content priors to guide depth estimation.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    <span class="text-primary font-semibold">Results:</span> Experimental results show that our SCIDE framework not only achieves state-of-the-art accuracy but also significantly reduces inference time, making real-time applications feasible in surgical settings. <span class="text-primary font-semibold">
+                        
+                </p>
 
-        <!-- Approach Section -->
-        <div class="content-section">
-            <h2 class="section-title">Approach</h2>
-            <p>We propose a novel Structure-Content Extractor (SC-Extractor) and Fast Optimized Diffusion Sampler (FODS) to improve depth estimation in challenging endoscopic environments. SC-Extractor captures spatial cues from illumination patterns and wall contours, while FODS accelerates the inference process using an adaptive time-step selection mechanism. These two innovations work together to enhance depth accuracy and speed.</p>
-            <div class="container image-row">
-                <div class="row">
-                    <div class="col-md-6 image-container">
-                        <img src="images/image-3.png" class="img-fluid" alt="Image 3">
+                
+            </div>
+        </section>
+
+        <!-- 图片部分 -->
+        <section id="images" class="mb-16 section-transition">
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                    <i class="fa fa-picture-o text-primary"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Images <span class="text-primary">🖼️</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/F10.jpg" alt="Method Overview" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 1</h3>
+                        <p class="text-gray-500 text-sm">Animal Experiment</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/image-1.png" alt="Network Architecture" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 2</h3>
+                        <p class="text-gray-500 text-sm">Network Architecture</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/image-2.png" alt="SCIDE Module" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 3</h3>
+                        <p class="text-gray-500 text-sm">SCIDE Module</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/image-3.png" alt="Training Pipeline" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 3</h3>
+                        <p class="text-gray-500 text-sm">Training Pipeline</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/image-4.png" alt="Dataset Overview" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 4</h3>
+                        <p class="text-gray-500 text-sm">Dataset Overview</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/image-5.png" alt="Experimental Setup" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 5</h3>
+                        <p class="text-gray-500 text-sm">Experimental Setup</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/image-6.png" alt="Qualitative Results" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 6</h3>
+                        <p class="text-gray-500 text-sm">Qualitative Results</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/image-7.png" alt="Quantitative Results" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 7</h3>
+                        <p class="text-gray-500 text-sm">Quantitative Results</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/image-8.png" alt="Error Analysis" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">Figure 8</h3>
+                        <p class="text-gray-500 text-sm">Error Analysis</p>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Results Section -->
-        <div class="content-section">
-            <h2 class="section-title">Results</h2>
-            <p>Experimental results demonstrate that our SCIDE framework achieves higher accuracy in monocular depth estimation under challenging endoscopic conditions compared to existing approaches. Specifically, our method shows improved robustness to illumination variations and complex surface structures. The following images show our method’s performance in different endoscopic environments:</p>
-
-            <!-- Image Grid Section -->
-            <div class="container image-row">
-                <div class="row">
-                    <div class="col-md-6 image-container">
-                        <img src="images/image-4.png" class="img-fluid" id="custom-img" alt="Result 1">
-                    </div>
-                    <div class="col-md-6 image-container">
-                        <img src="images/image-5.png" class="img-fluid" alt="Result 2">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 image-container">
-                        <img src="images/image-6.png" class="img-fluid" alt="Result 3">
-                    </div>
-                </div>
+            <!-- 查看更多按钮 -->
+            <div class="text-center mt-8">
+                <button class="px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-gray-50 transition-all flex items-center mx-auto">
+                    <i class="fa fa-th-large mr-2"><a href="https://tokymin.github.io/hirde.index" target="_blank"></a></i> 更多
+                </button>
             </div>
-        </div>
+        </section>
+
+        <!-- 结果部分 -->
+        <section id="results" class="mb-16 section-transition">
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                    <i class="fa fa-bar-chart text-primary"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Results <span class="text-primary">📊</span></h2>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-md">
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    By incorporating SC-Extractor and FODS, our method enhances the robustness and accuracy of depth predictions under complex lighting conditions and within narrow luminal endoscopic environments. Experimental evaluations on EndoSLAM, Endomapper, and our custom-collected phantom dataset demonstrate the competitive performance of our method. Furthermore, our proposed FODS not only ensures high-fidelity depth estimation but also significantly accelerates the inference process, making it suitable for real-time surgical applications. 
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fa fa-database text-primary mr-2"></i> EndoSLAM Dataset Results (SCIDE)
+                        </h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-600">Absolute Relative Error (Abs Rel)</span>
+                            <span class="font-semibold text-primary">0.215±0.077</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                            <div class="bg-primary h-2.5 rounded-full" style="width: 21.5%"></div>
+                        </div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-600">Squared Relative Error (Sq Rel)</span>
+                            <span class="font-semibold text-green-600">0.027±0.019</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                            <div class="bg-green-600 h-2.5 rounded-full" style="width: 2.7%"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">Root Mean Square Error (RMSE)</span>
+                            <span class="font-semibold text-purple-600">0.0875±0.013</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-purple-600 h-2.5 rounded-full" style="width: 8.75%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fa fa-flask text-primary mr-2"></i> EndoMapper Dataset Results (SCIDE)
+                        </h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-600">Structural Similarity Index (SSIM)</span>
+                            <span class="font-semibold text-primary">0.612±0.070</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                            <div class="bg-primary h-2.5 rounded-full" style="width: 61.2%"></div>
+                        </div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-600">Edge Consistency (EC)</span>
+                            <span class="font-semibold text-green-600">0.237±0.015</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                            <div class="bg-green-600 h-2.5 rounded-full" style="width: 23.7%"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">Histogram Similarity (HS)</span>
+                            <span class="font-semibold text-purple-600">0.237±0.012</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-purple-600 h-2.5 rounded-full" style="width: 23.7%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fa fa-bolt text-yellow-500 mr-2"></i> FODS Performance Metrics
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-700">Inference Speedup</span>
+                                <span class="font-bold text-blue-700">74.2%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 74.2%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-700">Accuracy (δ₃)</span>
+                                <span class="font-bold text-green-700">0.972±0.030</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 97.2%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-700">Inference Time</span>
+                                <span class="font-bold text-purple-700">0.312s</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: 31.2%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h4 class="font-medium text-gray-700 mb-3">Key Observations:</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>SCIDE achieves <span class="font-semibold">74.2% inference speedup</span> with FODS while maintaining high accuracy</li>
+                            <li>Depth map fidelity comparable to 20-step sampling achieved in just <span class="font-semibold">5-10 steps</span></li>
+                            <li>Optimal parameters: ε = 0.02-0.06, steps = 5-15 balance performance and efficiency</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                    <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fa fa-cogs text-red-500 mr-2"></i> SC-Extractor Ablation Study
+                    </h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="py-2 px-4 border-b">Model</th>
+                                    <th class="py-2 px-4 border-b">Structure Extractor</th>
+                                    <th class="py-2 px-4 border-b">Content Extractor</th>
+                                    <th class="py-2 px-4 border-b">RMSE ↓</th>
+                                    <th class="py-2 px-4 border-b">δ₃ ↑</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">#1 (Baseline)</td>
+                                    <td class="py-2 px-4 border-b text-center">✗</td>
+                                    <td class="py-2 px-4 border-b text-center">✗</td>
+                                    <td class="py-2 px-4 border-b">0.0901±0.0028</td>
+                                    <td class="py-2 px-4 border-b">0.715±0.047</td>
+                                </tr>
+                                <tr class="bg-blue-50">
+                                    <td class="py-2 px-4 border-b">#2</td>
+                                    <td class="py-2 px-4 border-b text-center">✓</td>
+                                    <td class="py-2 px-4 border-b text-center">✗</td>
+                                    <td class="py-2 px-4 border-b">0.0893±0.0025</td>
+                                    <td class="py-2 px-4 border-b">0.786±0.045</td>
+                                </tr>
+                                <tr class="bg-green-50">
+                                    <td class="py-2 px-4 border-b">#3</td>
+                                    <td class="py-2 px-4 border-b text-center">✗</td>
+                                    <td class="py-2 px-4 border-b text-center">✓</td>
+                                    <td class="py-2 px-4 border-b">0.0888±0.0024</td>
+                                    <td class="py-2 px-4 border-b">0.862±0.049</td>
+                                </tr>
+                                <tr class="bg-yellow-100 font-semibold">
+                                    <td class="py-2 px-4 border-b">#4 (SCIDE)</td>
+                                    <td class="py-2 px-4 border-b text-center">✓</td>
+                                    <td class="py-2 px-4 border-b text-center">✓</td>
+                                    <td class="py-2 px-4 border-b">0.0875±0.0015</td>
+                                    <td class="py-2 px-4 border-b">0.972±0.043</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-4 text-sm text-gray-600">
+                        <p class="mb-2"><b>Key Findings:</b></p>
+                        <ul class="list-disc pl-5">
+                            <li>Full SC-Extractor configuration achieves <span class="font-semibold">lowest RMSE (0.0875)</span> and <span class="font-semibold">highest δ₃ accuracy (0.972)</span></li>
+                            <li>Content Extractor contributes more significantly to accuracy improvement</li>
+                            <li>Combined extractors provide <span class="font-semibold">synergistic benefits</span> for depth estimation</li>
+                        </ul>
+                    </div>
+                </div>
+
+<!-- 比较表格 -->
+<div class="overflow-x-auto">
+    <table class="min-w-full bg-white rounded-lg overflow-hidden">
+        <thead>
+            <tr class="bg-gray-50">
+                <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+                <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ATE (mm) ↓</th>
+                <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RMSE (mm) ↓</th>
+                <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RE (rad) ↓</th>
+                <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+            <tr>
+                <td class="py-4 px-6 text-sm font-medium text-gray-900">Akaze</td>
+                <td class="py-4 px-6 text-sm text-gray-500">2.83±1.72</td>
+                <td class="py-4 px-6 text-sm text-gray-500">0.60±0.17</td>
+                <td class="py-4 px-6 text-sm text-gray-500">0.64±0.006</td>
+                <td class="py-4 px-6 text-sm text-gray-500">Traditional</td>
+            </tr>
+            <tr>
+                <td class="py-4 px-6 text-sm font-medium text-gray-900">Brisk</td>
+                <td class="py-4 px-6 text-sm text-gray-500">2.80±1.93</td>
+                <td class="py-4 px-6 text-sm text-gray-500">0.60±0.18</td>
+                <td class="py-4 px-6 text-sm text-gray-500">0.48±0.008</td>
+                <td class="py-4 px-6 text-sm text-gray-500">Traditional</td>
+            </tr>
+            <tr>
+                <td class="py-4 px-6 text-sm font-medium text-gray-900">ORB</td>
+                <td class="py-4 px-6 text-sm text-gray-500">3.27±2.16</td>
+                <td class="py-4 px-6 text-sm text-gray-500">0.62±0.18</td>
+                <td class="py-4 px-6 text-sm text-gray-500">0.54±0.011</td>
+                <td class="py-4 px-6 text-sm text-gray-500">Traditional</td>
+            </tr>
+            <tr>
+                <td class="py-4 px-6 text-sm font-medium text-gray-900">SC-Depthv2</td>
+                <td class="py-4 px-6 text-sm text-gray-500">9.68±5.66</td>
+                <td class="py-4 px-6 text-sm text-gray-500">1.26±0.39</td>
+                <td class="py-4 px-6 text-sm text-gray-500">0.44±0.001</td>
+                <td class="py-4 px-6 text-sm text-gray-500">Self-supervised</td>
+            </tr>
+            <tr>
+                <td class="py-4 px-6 text-sm font-medium text-gray-900">Endo-SfMLearner</td>
+                <td class="py-4 px-6 text-sm text-gray-500">9.27±3.25</td>
+                <td class="py-4 px-6 text-sm text-gray-500">1.26±0.23</td>
+                <td class="py-4 px-6 text-sm text-gray-500">0.45±0.017</td>
+                <td class="py-4 px-6 text-sm text-gray-500">Self-supervised</td>
+            </tr>
+            <tr class="bg-blue-50">
+                <td class="py-4 px-6 text-sm font-medium text-primary">AKA-Net (Ours)</td>
+                <td class="py-4 px-6 text-sm font-medium text-primary">1.26±0.48</td>
+                <td class="py-4 px-6 text-sm font-medium text-primary">0.51±0.20</td>
+                <td class="py-4 px-6 text-sm font-medium text-primary">0.43±0.001</td>
+                <td class="py-4 px-6 text-sm font-medium text-primary">Self-supervised</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+            </div>
+        </section>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-    <!-- Footer Section -->
-    <footer>
-        <p>© 2024 SCIDE Research Team</p>
+    <!-- 页脚 -->
+    <footer class="bg-white text-gray-800 py-12 border-t border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="mr-2 text-primary">📌</span>AKA-Net
+                    </h3>
+                    <p class="text-gray-600 mb-4">
+                        A self-supervised colonoscopy pose estimation method with attentional keypoints adjustment module.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-primary transition-colors">
+                            <i class="fa fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-primary transition-colors">
+                            <i class="fa fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-primary transition-colors">
+                            <i class="fa fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">目录</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#abstract" class="text-gray-600 hover:text-primary transition-colors">摘要</a></li>
+                        <li><a href="#resources" class="text-gray-600 hover:text-primary transition-colors">资源</a></li>
+                        <li><a href="#images" class="text-gray-600 hover:text-primary transition-colors">展示</a></li>
+                        <li><a href="#results" class="text-gray-600 hover:text-primary transition-colors">结果</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">团队</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-600">
+                            <i class="fa fa-envelope-o mr-2 text-primary"></i> xx@Anonymous
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <i class="fa fa-map-marker mr-2 text-primary"></i>  Anonymous 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-500">
+                <p>©  Anonymous . All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('py-2', 'shadow-md');
+                navbar.classList.remove('py-3', 'shadow-sm');
+            } else {
+                navbar.classList.add('py-3', 'shadow-sm');
+                navbar.classList.remove('py-2', 'shadow-md');
+            }
+        });
+
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    // 关闭移动端菜单
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // 滚动时的动画效果
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section-transition').forEach(section => {
+            section.classList.add('opacity-0', 'translate-y-10', 'transition-all', 'duration-700');
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
+    
